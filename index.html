@@ -1,11 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grateful Organic</title>
+    <link rel="icon" type="image/x-icon" href="images/headLogo.jpg" />
+
+    <!-- Tailwind css and Daisyui CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google font CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      .font-manrope {
+        font-family: "Manrope", system-ui;
+      }
+    </style>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+              "btn-color": "#ABEF5F",
+              "light-btn": "#ABEF5F80",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body>
+
+        <header class="flex items-center  justify-center mt-4">
+            <div class="flex-col space-y-5 text-center">
+                <h3 class="text-2xl font-semibold">AI Universe Hub</h3>
+                <button class="btn bg-red-500 text-white">Sort By Date</button>
+            </div>
+        </header>
+
+        <main class="w-11/12 mt-8 max-w-[1440px] mx-auto">
+            <!-- AI Universe Collection -->
+             <section>
+                <div class="grid grid-cols-1 gap-3 md:grid-cols-3" id="card-container">
+        
+                </div>
+
+                <div class="mt-4">
+                    <button>See More</button>
+                </div>
+             </section>
+        </main>
+
+    <script src="js/apps.js"></script>
+  </body>
 </html>
