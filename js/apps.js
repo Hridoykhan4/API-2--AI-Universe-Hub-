@@ -1,18 +1,26 @@
-const loadAI = async () => {
+const loadAI = async (showAll) => {
   const res = await fetch("https://openapi.programming-hero.com/api/ai/tools");
   const data = await res.json();
   const dataDetails = data.data.tools;
-  showAllCopilot(dataDetails);
+  showAllCopilot(dataDetails, showAll);
 };
 
-const showAllCopilot = (dataDetails) => {
+const showAllCopilot = (dataDetails, showAll) => {
+  const showAllContainer = document.getElementById("show-all-container");
+  if (dataDetails.length > 6 && !showAll) {
+    showAllContainer.classList.remove("hidden");
+  } else {
+    showAllContainer.classList.add("hidden");
+  }
 
-    console.log(dataDetails.length)
+  if (!showAll) {
+    dataDetails = dataDetails.slice(0, 6);
+  } else {
+    dataDetails = dataDetails.slice(6, 12);
+  }
 
-    dataDetails = dataDetails.slice(0,6)
   const cardContainer = document.getElementById("card-container");
   dataDetails.forEach((data) => {
-    console.log(data)
     const cardDiv = document.createElement("div");
     cardDiv.classList = `card bg-base-100 shadow-xl`;
     cardDiv.innerHTML = `
@@ -35,13 +43,82 @@ const showAllCopilot = (dataDetails) => {
         <div class="mt-3 flex items-center gap-2">
        <img class="w-10" src="./assets/calendar.png" alt="">
         <span>${data.published_in}</span>  
-        <img class="w-10 flex justify-end ms-auto" src="./assets/right-arrow.png" alt="" style="filter: invert(17%) sepia(83%) saturate(747%) hue-rotate(346deg) brightness(96%) contrast(92%)">
+        <img onclick="showDetails('${data.id}')" class="w-10 cursor-pointer flex justify-end ms-auto" src="./assets/right-arrow.png" alt="" style="filter: invert(17%) sepia(83%) saturate(747%) hue-rotate(346deg) brightness(96%) contrast(92%)">
             
         </div>
     </div>
         `;
-        cardContainer.appendChild(cardDiv)
+    cardContainer.appendChild(cardDiv);
   });
 };
 
+
+const showDetails = async(id) => {
+
+
+    const res = await fetch(`https://openapi.programming-hero.com/api/ai/tool/${id}`);
+    const data = await res.json();
+    const showByOne = data.data;
+    showSingleDetails(showByOne)
+}
+
+const showSingleDetails = (card) => {
+    console.log(card)
+
+    const showPopup = document.getElementById('show-details-popup');
+
+    showPopup.innerHTML = `
+        <div class="flex-1 border border-red-500 rounded-lg bg-red-300 p-5 bg-opacity-5">
+            <p class="font-bold">${card.description}</p>
+            <div class="mt-4 grid grid-cols-2 gap-3">
+            
+            <div class="flex flex-col font-bold text-green-500">
+            <p>${card.pricing[0]?.price}</p>
+            <p>${card.pricing[0]?.plan}</p>
+            <span>
+            </div>
+
+            <div class="flex flex-col font-bold text-green-500">
+            <p>${card.pricing[1]?.price}</p>
+            <p>${card.pricing[1]?.plan}</p>
+            <span>
+            </div>
+
+            <div class="flex flex-col font-bold text-green-500">
+            <p>${card.pricing[2]?.price}</p>
+            <p>${card.pricing[2]?.plan}</p>
+            <span>
+            </div>
+          
+            </div>
+
+            <div class="flex gap-2">
+                <div>
+                    <h3>${card.features.feature_name}</h3>
+                </div>
+                <div>
+                
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="flex-1">
+         <img src="${card.image_link[0] || card.image_link[1] || card.image_link[2]}" class="h-1/2 w-full" alt="Not Found">
+            <div class="flex flex-col text-center mt-3 gap-3">
+         <h3 class="font-bold">Hi, how are you doing today?</h3>
+         <p class="font-semibold text-gray-700">I'm doing well, thank you for asking. How can <br> I assist you today?</p>
+        </div>
+        </div>
+    `
+    my_modal_5.showModal()
+}
+
+
+
 loadAI();
+
+const handleShowAll = () => {
+  loadAI(true);
+};
