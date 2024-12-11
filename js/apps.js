@@ -50,8 +50,7 @@ const showAllCopilot = (dataDetails, showAll) => {
         `;
     cardContainer.appendChild(cardDiv);
   });
-toggleLoadingSpinner(false)
-
+  toggleLoadingSpinner(false);
 };
 
 const showDetails = async (id) => {
@@ -126,16 +125,15 @@ const showSingleDetails = (card) => {
   my_modal_5.showModal();
 };
 
-
 const toggleLoadingSpinner = (isLoading) => {
-  const spinLoader = document.getElementById('spinnerControl');
+  const spinLoader = document.getElementById("spinnerControl");
   if (isLoading) {
     spinLoader.classList.remove("hidden");
   } else {
     spinLoader.classList.add("hidden");
   }
 };
-toggleLoadingSpinner(true)
+toggleLoadingSpinner(true);
 
 loadAI();
 
