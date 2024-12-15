@@ -24,8 +24,8 @@ const showAllCopilot = (dataDetails, showAll) => {
     const cardDiv = document.createElement("div");
     cardDiv.classList = `card bg-base-100 shadow-xl`;
     cardDiv.innerHTML = `
-    <figure>
-        <img
+    <figure class="h-52">
+        <img class="w-full h-full object-cover"
             src="${data.image}"
             alt="Shoes" />
         </figure>
@@ -135,7 +135,9 @@ const toggleLoadingSpinner = (isLoading) => {
 };
 toggleLoadingSpinner(true);
 
-loadAI();
+setTimeout(() => {
+  loadAI();
+}, 1000);
 
 const handleShowAll = () => {
   loadAI(true);
