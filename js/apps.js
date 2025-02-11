@@ -8,18 +8,14 @@ const loadAI = async (showAll) => {
 const showAllCopilot = (dataDetails, showAll) => {
   const showAllContainer = document.getElementById("show-all-container");
   if (dataDetails.length > 6 && !showAll) {
+    dataDetails = dataDetails.slice(0, 6);
     showAllContainer.classList.remove("hidden");
   } else {
     showAllContainer.classList.add("hidden");
   }
 
-  if (!showAll) {
-    dataDetails = dataDetails.slice(0, 6);
-  } else {
-    dataDetails = dataDetails.slice(6, 12);
-  }
-
   const cardContainer = document.getElementById("card-container");
+  cardContainer.innerHTML = "";
   dataDetails.forEach((data) => {
     const cardDiv = document.createElement("div");
     cardDiv.classList = `card bg-base-100 shadow-xl`;
@@ -51,6 +47,7 @@ const showAllCopilot = (dataDetails, showAll) => {
     cardContainer.appendChild(cardDiv);
   });
   toggleLoadingSpinner(false);
+  document.getElementById("sort-btn").classList.remove("hidden");
 };
 
 const showDetails = async (id) => {
@@ -141,4 +138,13 @@ setTimeout(() => {
 
 const handleShowAll = () => {
   loadAI(true);
+};
+
+const handleSort = async () => {
+  const res = await fetch("https://openapi.programming-hero.com/api/ai/tools");
+  const data = await res.json();
+  const allData = data.data.tools.sort(
+    (a, b) => new Date(b.published_in) - new Date(a.published_in)
+  );
+  showAllCopilot(allData, (clickedSort = true));
 };
