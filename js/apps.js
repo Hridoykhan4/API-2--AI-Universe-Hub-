@@ -60,8 +60,6 @@ const showDetails = async (id) => {
 };
 
 const showSingleDetails = (card) => {
-  console.log(card);
-
   const showPopup = document.getElementById("show-details-popup");
 
   showPopup.innerHTML = `
